@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class SignInWithEmailRequest(
 
-    @SerializedName("email")
-    var email: String,
+        @SerializedName("email")
+        override var email: String = "",
 
-    @SerializedName("password")
-    var password: String,
+        @SerializedName("password")
+        override var password: String = "",
 
-    @SerializedName("returnSecureToken")
-    var returnSecureToken: Boolean = true
+        @SerializedName("returnSecureToken")
+        override var returnSecureToken: Boolean = true
 
-)
+) : SignInWithEmailRequestInterface

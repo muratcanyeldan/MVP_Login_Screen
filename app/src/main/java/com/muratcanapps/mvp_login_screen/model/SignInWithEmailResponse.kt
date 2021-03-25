@@ -3,27 +3,29 @@ package com.muratcanapps.mvp_login_screen.model
 import com.google.gson.annotations.SerializedName
 
 data class SignInWithEmailResponse(
-    @SerializedName("kind")
-    var kind: String = "",
 
-    @SerializedName("localId")
-    var localId: String = "",
+        @SerializedName("kind")
+        override var kind: String = "",
 
-    @SerializedName("email")
-    var email: String = "",
+        @SerializedName("localId")
+        override var localId: String = "",
 
-    @SerializedName("displayName")
-    var displayName: String = "",
+        @SerializedName("email")
+        override var email: String = "",
 
-    @SerializedName("idToken")
-    var idToken: String = "",
+        @SerializedName("displayName")
+        override var displayName: String = "",
 
-    @SerializedName("registered")
-    var registered: Boolean = false,
+        @SerializedName("idToken")
+        override var idToken: String = "",
 
-    @SerializedName("refreshToken")
-    var refreshToken: String = "",
+        @SerializedName("registered")
+        override var registered: Boolean = false,
 
-    @SerializedName("expiresIn")
-    var expiresIn: String = ""
-)
+        @SerializedName("refreshToken")
+        override var refreshToken: String = "",
+
+        @SerializedName("expiresIn")
+        override var expiresIn: String = ""
+
+) : SignInWithEmailResponseInterface
