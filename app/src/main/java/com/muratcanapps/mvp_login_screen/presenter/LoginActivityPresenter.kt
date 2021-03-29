@@ -11,9 +11,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivityPresenter(internal var view : LoginActivityInterface) : LoginActivityPresenterInterface {
+class LoginActivityPresenter(internal var view: LoginActivityInterface) : LoginActivityPresenterInterface {
+
     override fun login(email: String, password: String) {
-        val request = SignInWithEmailRequest(email,password)
+        val request = SignInWithEmailRequest(email, password)
 
         var loggedInAccount: SignInWithEmailResponse? = null
         val loginService =
@@ -40,24 +41,31 @@ class LoginActivityPresenter(internal var view : LoginActivityInterface) : Login
                     val errorResponseFull = response.errorBody()?.string()
                     val errorResponseMessage = errorResponseFull?.substringAfter(""""message": """")
                             ?.substringBefore("""",""")
-                    transmitResponseToView(false, errorResponseMessage)
+                    transmitResponseToView(false, message = errorResponseMessage)
                 }
             }
 
             override fun onFailure(call: Call<Any?>, t: Throwable) {
-                transmitResponseToView(false, "API endpoint can't be reached")
+                transmitResponseToView(false, 1)
             }
         })
 
 
         val isLoginSuccess = request.isDataValid
-        if(isLoginSuccess){
+        if (isLoginSuccess) {
             //success
-        }
-        else{
+        } else {
             //fail
         }
 
+    }
+
+    private fun transmitResponseToView(status: Boolean, statusCode: Int = 0, message: String? = null) {
+        if (status) {
+            view.onLoginResult(statusCode = statusCode, status = true)
+        } else {
+            view.onLoginResult(statusCode = statusCode, message = message)
+        }
     }
 
 
