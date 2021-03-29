@@ -16,6 +16,6 @@ data class SignInWithEmailRequest(
         override var returnSecureToken: Boolean = true
 
 ) : SignInWithEmailRequestInterface {
-        override val isDataValid: Boolean
-                get() = (isEmailValid(email) && isPasswordValid(password))
+    override val isDataValid: Boolean
+        get() = (isEmailValid(email) && isPasswordValid(password))
 }

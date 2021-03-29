@@ -1,5 +1,6 @@
 package com.muratcanapps.mvp_login_screen.network
 
+import com.muratcanapps.mvp_login_screen.model.SignInWithEmailRequest
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -16,9 +17,9 @@ object ServiceGenerator {
     var retrofit: Retrofit = builder.build()
 
     fun <S> createService(
-        serviceClass: Class<S>, email: String, password: String
+        serviceClass: Class<S>, request : SignInWithEmailRequest
     ): S {
-        val authToken: String = Credentials.basic(email, password)
+        val authToken: String = Credentials.basic(request.email, request.password)
         return createService(serviceClass, authToken)
     }
 

@@ -3,5 +3,6 @@
     <string-array name="status_codes">
         <item>Login Successful</item>
         <item>API endpoint can not be reached</item>
+        <item>Email or Password Format Invalid</item>
     </string-array>
 </resources>

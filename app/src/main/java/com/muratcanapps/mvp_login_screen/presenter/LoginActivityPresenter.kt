@@ -11,36 +11,45 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivityPresenter(internal var view: LoginActivityInterface) : LoginActivityPresenterInterface {
+class LoginActivityPresenter(internal var view: LoginActivityInterface) :
+    LoginActivityPresenterInterface {
 
     override fun login(email: String, password: String) {
         val request = SignInWithEmailRequest(email, password)
+        if (request.isDataValid) {
+            loginAuth(request)
+        } else {
+            transmitResponseToView(false, 2)
+        }
+    }
+
+    override fun loginAuth(request: SignInWithEmailRequest) {
 
         var loggedInAccount: SignInWithEmailResponse? = null
         val loginService =
-                ServiceGenerator.createService(LoginService::class.java, email, password)
+            ServiceGenerator.createService(LoginService::class.java, request)
         val call: Call<Any?> =
-                loginService.loginWithEmail(SignInWithEmailRequest(email, password))
+            loginService.loginWithEmail(request)
 
         call.enqueue(object : Callback<Any?> {
             override fun onResponse(
-                    call: Call<Any?>,
-                    response: Response<Any?>
+                call: Call<Any?>,
+                response: Response<Any?>
             ) {
 
                 if (response.isSuccessful) {
                     transmitResponseToView(true)
                     val successfulResponseGson = Gson().toJson(response.body())
                     val successfulResponse = Gson().fromJson(
-                            successfulResponseGson,
-                            SignInWithEmailResponse::class.java
+                        successfulResponseGson,
+                        SignInWithEmailResponse::class.java
                     )
                     loggedInAccount = successfulResponse
                     Log.d("responseBu", successfulResponse.email)
                 } else {
                     val errorResponseFull = response.errorBody()?.string()
                     val errorResponseMessage = errorResponseFull?.substringAfter(""""message": """")
-                            ?.substringBefore("""",""")
+                        ?.substringBefore("""",""")
                     transmitResponseToView(false, message = errorResponseMessage)
                 }
             }
@@ -49,24 +58,17 @@ class LoginActivityPresenter(internal var view: LoginActivityInterface) : LoginA
                 transmitResponseToView(false, 1)
             }
         })
-
-
-        val isLoginSuccess = request.isDataValid
-        if (isLoginSuccess) {
-            //success
-        } else {
-            //fail
-        }
-
     }
 
-    private fun transmitResponseToView(status: Boolean, statusCode: Int = 0, message: String? = null) {
+    private fun transmitResponseToView(
+        status: Boolean,
+        statusCode: Int = 0,
+        message: String? = null
+    ) {
         if (status) {
             view.onLoginResult(statusCode = statusCode, status = true)
         } else {
             view.onLoginResult(statusCode = statusCode, message = message)
         }
     }
-
-
 }

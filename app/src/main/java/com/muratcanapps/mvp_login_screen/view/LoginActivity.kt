@@ -8,9 +8,9 @@ import com.muratcanapps.mvp_login_screen.extentions.toast
 import com.muratcanapps.mvp_login_screen.presenter.LoginActivityPresenter
 import com.muratcanapps.mvp_login_screen.presenter.LoginActivityPresenterInterface
 
-class LoginActivity: AppCompatActivity(), LoginActivityInterface {
+class LoginActivity : AppCompatActivity(), LoginActivityInterface {
 
-    internal lateinit var loginPresenter : LoginActivityPresenterInterface
+    internal lateinit var loginPresenter: LoginActivityPresenterInterface
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,8 +26,8 @@ class LoginActivity: AppCompatActivity(), LoginActivityInterface {
         }
     }
 
-    override fun onLoginResult(message : String? , status : Boolean , statusCode : Int) {
+    override fun onLoginResult(message: String?, status: Boolean, statusCode: Int) {
         val statusArray: Array<String> = resources.getStringArray(R.array.status_codes)
-        applicationContext.toast(message?:statusArray[statusCode])
+        applicationContext.toast(message ?: statusArray[statusCode])
     }
 }
