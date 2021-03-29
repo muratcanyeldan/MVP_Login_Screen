@@ -18,4 +18,11 @@ data class SignInWithEmailRequest(
 ) : SignInWithEmailRequestInterface {
     override val isDataValid: Boolean
         get() = (isEmailValid(email) && isPasswordValid(password))
+
+    //TODO(Buraya if email valid
+    //    return 0
+    //    else if password valid return 1
+    //    vs şeklinde bir yapı kurulacak
+    //    geri dönüş değeri int olacak ona göre okuma yapılacak)
+
 }
