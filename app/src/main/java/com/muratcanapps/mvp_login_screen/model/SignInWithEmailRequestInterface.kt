@@ -8,4 +8,6 @@ interface SignInWithEmailRequestInterface {
     var password: String
 
     var returnSecureToken: Boolean
+
+    val isDataValid: Boolean
 }

@@ -17,4 +17,5 @@ interface SignInWithEmailResponseInterface {
     var refreshToken: String
 
     var expiresIn: String
+
 }
