@@ -1,10 +1,9 @@
 package com.muratcanapps.mvp_login_screen.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.muratcanapps.mvp_login_screen.R
 import com.muratcanapps.mvp_login_screen.databinding.ActivityLoginBinding
-import com.muratcanapps.mvp_login_screen.extentions.toast
 import com.muratcanapps.mvp_login_screen.presenter.LoginActivityPresenter
 import com.muratcanapps.mvp_login_screen.presenter.LoginActivityPresenterInterface
 
@@ -27,7 +26,9 @@ class LoginActivity : AppCompatActivity(), LoginActivityInterface {
     }
 
     override fun onLoginResult(message: String?, status: Boolean, statusCode: Int) {
-        val statusArray: Array<String> = resources.getStringArray(R.array.status_codes)
-        applicationContext.toast(message ?: statusArray[statusCode])
+        //val statusArray: Array<String> = resources.getStringArray(R.array.status_codes)
+        val statusArray = arrayOf("Login Successful","API endpoint can not be reached","Email or Password Format Invalid")
+        //baseContext.toast(statusArray[statusCode])
+        Log.d("cevap = " , message ?: statusArray[statusCode])
     }
 }

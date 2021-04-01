@@ -9,5 +9,4 @@ interface SignInWithEmailRequestInterface {
 
     var returnSecureToken: Boolean
 
-    val isDataValid: Boolean
 }

@@ -1,8 +1,6 @@
 package com.muratcanapps.mvp_login_screen.model
 
 import com.google.gson.annotations.SerializedName
-import com.muratcanapps.mvp_login_screen.utils.isEmailValid
-import com.muratcanapps.mvp_login_screen.utils.isPasswordValid
 
 data class SignInWithEmailRequest(
 
@@ -15,14 +13,11 @@ data class SignInWithEmailRequest(
         @SerializedName("returnSecureToken")
         override var returnSecureToken: Boolean = true
 
-) : SignInWithEmailRequestInterface {
-    override val isDataValid: Boolean
-        get() = (isEmailValid(email) && isPasswordValid(password))
+) : SignInWithEmailRequestInterface
+    /*
 
-    //TODO(Buraya if email valid
-    //    return 0
-    //    else if password valid return 1
-    //    vs şeklinde bir yapı kurulacak
-    //    geri dönüş değeri int olacak ona göre okuma yapılacak)
+    entity model burası. bunların interface e ihtiyacı var mı araştır. Yok gibi görünüyor ama net değil
+    bu konuda biraz araştırma yapılması gerekiyor .Response kısmı da aynı şekilde interface gereksiz gibi
 
-}
+    network işlemlerinin yapıldığı model kısmına interface mutlaka gerekiyor.
+     */
