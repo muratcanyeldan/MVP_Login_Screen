@@ -11,7 +11,6 @@ import com.muratcanapps.mvp_login_screen.view.LoginActivityInterface
 
 class LoginActivityPresenter(internal var view: LoginActivityInterface) :
     LoginActivityPresenterInterface {
-    //2 interface olmalı
     private lateinit var networkModelInterface : NetworkOperationsModelInterface
     lateinit var response : NetworkResponse
 
@@ -20,7 +19,6 @@ class LoginActivityPresenter(internal var view: LoginActivityInterface) :
         if (isDataValid(request)) {
             networkModelInterface = NetworkOperationsModel()
             response = networkModelInterface.loginAuth(request)
-            //transmitResponse(response)
         } else {
             transmitResponseToView(false, 2)
         }
