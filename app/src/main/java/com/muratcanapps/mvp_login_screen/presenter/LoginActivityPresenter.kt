@@ -9,10 +9,11 @@ import com.muratcanapps.mvp_login_screen.utils.isEmailValid
 import com.muratcanapps.mvp_login_screen.utils.isPasswordValid
 import com.muratcanapps.mvp_login_screen.view.LoginActivityInterface
 
-class LoginActivityPresenter(internal var view: LoginActivityInterface) :
+class LoginActivityPresenter(var view: LoginActivityInterface) :
     LoginActivityPresenterInterface {
     private lateinit var networkModelInterface : NetworkOperationsModelInterface
     lateinit var response : NetworkResponse
+    var statusCode:Int = 0
 
     override fun login(email: String, password: String) {
         val request = SignInWithEmailRequest(email, password)
@@ -20,7 +21,8 @@ class LoginActivityPresenter(internal var view: LoginActivityInterface) :
             networkModelInterface = NetworkOperationsModel()
             response = networkModelInterface.loginAuth(request)
         } else {
-            transmitResponseToView(false, 2)
+            statusCode = 2
+            transmitResponseToView(false, statusCode)
         }
     }
 
@@ -49,10 +51,12 @@ class LoginActivityPresenter(internal var view: LoginActivityInterface) :
 
     private fun handleNetworkResponse(response : NetworkResponse){
         if(!response.signInWithEmailResponse.isNull()){
+            statusCode = 0
             transmitResponseToView(true)
         }
         else{
-            transmitResponseToView(false,response.errorResponseCode?:0,response.errorResponseString)
+            statusCode = response.errorResponseCode?:0
+            transmitResponseToView(false,statusCode,response.errorResponseString)
         }
     }
 }

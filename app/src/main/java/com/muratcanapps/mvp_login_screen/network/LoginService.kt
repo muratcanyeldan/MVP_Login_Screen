@@ -9,14 +9,6 @@ const val postValue: String = "v1/accounts:signInWithPassword?key=" + Constants.
 
 interface LoginService {
 
-    //passive view yaklaşımı
-
-    //interface yaklaşımı 6 tane en az view interface , activity interface
-    //presenter , presenter interface
-    //network , network interface
-
-    //network katmanında olacak view model işlemleri
-
     @POST(postValue)
     fun loginWithEmail(@Body request: SignInWithEmailRequest): Call<Any?>
 }

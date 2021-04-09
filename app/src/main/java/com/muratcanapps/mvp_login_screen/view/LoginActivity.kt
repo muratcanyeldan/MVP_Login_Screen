@@ -12,6 +12,7 @@ class LoginActivity : AppCompatActivity(), LoginActivityInterface {
     internal lateinit var loginPresenter: LoginActivityPresenterInterface
     private lateinit var binding: ActivityLoginBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -31,4 +32,5 @@ class LoginActivity : AppCompatActivity(), LoginActivityInterface {
         //baseContext.toast(statusArray[statusCode])
         Log.d("cevap = " , message ?: statusArray[statusCode])
     }
+
 }
