@@ -8,10 +8,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.mock
-import org.mockito.MockitoAnnotations
+import org.mockito.Mockito
 
-abstract class LoginTest {
+class LoginTest {
 
     @Mock
     private lateinit var loginActivityPresenter: LoginActivityPresenter
@@ -25,14 +24,11 @@ abstract class LoginTest {
     @Before
     fun setUp() {
 
-        //loginActivityInterface = Mockito.spy(LoginActivityInterface)
-
-        MockitoAnnotations.initMocks(this)
-        loginActivityInterface = mock(LoginActivityInterface::class.java)
-        loginActivityPresenter = LoginActivityPresenter(loginActivityInterface)
-        //loginActivityPresenter = Mockito.spy(LoginActivityPresenter(loginActivityInterface));
+        loginActivityInterface = Mockito.spy(LoginActivityInterface::class.java)
+        loginActivityPresenter = Mockito.spy(LoginActivityPresenter(loginActivityInterface));
 
     }
+
 
     @Test
     fun `Validation fail test email empty password empty`() {
@@ -97,7 +93,7 @@ abstract class LoginTest {
         Truth.assertThat(loginActivityPresenter.statusCode != 0)
     }
 
-    /*
+
     @Test
     fun `Validation success test`() {
         val email = "muratcan_yeldan@hotmail.com"
@@ -113,11 +109,11 @@ abstract class LoginTest {
             "AOvuKvQ9buoqfkT5Oy-LcrllqGSg5xdEdNEA9NSakp_cB-OhQapcB3n3nTH-BH2zD0IyHgr_CpjJiYgmjMFsrr_xOmkFC8vPTv8AGBWbrM_n31j4_XeAQ07Skt4TJg_Uz1j28HeYlSl1qa7bF6u6J8XYB9bAQV2lNUEFR6hDRQrlgBcAuYHYJiTLlXzDiydUmw5nv9XvINUoT5SqyywcTYRxqNfciwQgng",
             "3600"
         )
-        Mockito.`when`(loginScreenViewModel.loginAuth(email, password)).thenReturn(account)
-        loginScreenViewModel.login(email, password)
+        Mockito.`when`(loginActivityPresenter.loginAuth(email, password)).thenReturn(account)
+        loginActivityPresenter.login(email, password)
 
-        Truth.assertThat(loginScreenViewModel.loginSuccessLiveData.value == true)
-        Truth.assertThat(loginScreenViewModel.loadingLiveData.value == false)
+        Truth.assertThat(loginActivityPresenter.loginSuccessLiveData.value == true)
+        Truth.assertThat(loginActivityPresenter.loadingLiveData.value == false)
 
 
         //assertThat(Mockito.`when`(loginScreenViewModel.login(email, password)).thenReturn(account))
@@ -126,5 +122,4 @@ abstract class LoginTest {
         //val testSingle = Single.just(account)
 
     }
-    */
 }
