@@ -2,6 +2,10 @@ package com.muratcanapps.mvp_login_screen
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth
+import com.muratcanapps.mvp_login_screen.model.NetworkOperationsModel
+import com.muratcanapps.mvp_login_screen.model.NetworkResponse
+import com.muratcanapps.mvp_login_screen.model.SignInWithEmailRequest
+import com.muratcanapps.mvp_login_screen.model.SignInWithEmailResponse
 import com.muratcanapps.mvp_login_screen.presenter.LoginActivityPresenter
 import com.muratcanapps.mvp_login_screen.view.LoginActivityInterface
 import org.junit.Before
@@ -18,6 +22,9 @@ class LoginTest {
     @Mock
     private lateinit var loginActivityInterface: LoginActivityInterface
 
+    @Mock
+    private lateinit var loginModel : NetworkOperationsModel
+
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -25,7 +32,8 @@ class LoginTest {
     fun setUp() {
 
         loginActivityInterface = Mockito.spy(LoginActivityInterface::class.java)
-        loginActivityPresenter = Mockito.spy(LoginActivityPresenter(loginActivityInterface));
+        loginActivityPresenter = Mockito.spy(LoginActivityPresenter(loginActivityInterface))
+        loginModel = Mockito.spy(NetworkOperationsModel::class.java)
 
     }
 
@@ -97,7 +105,7 @@ class LoginTest {
     @Test
     fun `Validation success test`() {
         val email = "muratcan_yeldan@hotmail.com"
-        val password = "12356"
+        val password = "123456"
 
         val account = SignInWithEmailResponse(
             "identitytoolkit#VerifyPasswordResponse",
@@ -109,17 +117,15 @@ class LoginTest {
             "AOvuKvQ9buoqfkT5Oy-LcrllqGSg5xdEdNEA9NSakp_cB-OhQapcB3n3nTH-BH2zD0IyHgr_CpjJiYgmjMFsrr_xOmkFC8vPTv8AGBWbrM_n31j4_XeAQ07Skt4TJg_Uz1j28HeYlSl1qa7bF6u6J8XYB9bAQV2lNUEFR6hDRQrlgBcAuYHYJiTLlXzDiydUmw5nv9XvINUoT5SqyywcTYRxqNfciwQgng",
             "3600"
         )
-        Mockito.`when`(loginActivityPresenter.loginAuth(email, password)).thenReturn(account)
+
+        val networkResponse = NetworkResponse(account,null,null)
+
+        val request = SignInWithEmailRequest(email, password)
+
+        Mockito.`when`(loginModel.loginAuth(request)).thenReturn(networkResponse)
         loginActivityPresenter.login(email, password)
 
-        Truth.assertThat(loginActivityPresenter.loginSuccessLiveData.value == true)
-        Truth.assertThat(loginActivityPresenter.loadingLiveData.value == false)
-
-
-        //assertThat(Mockito.`when`(loginScreenViewModel.login(email, password)).thenReturn(account))
-
-        //assertThat(Mockito.`when`(loginScreenViewModel.loginAuth(email, password)).thenReturn(testSingle))
-        //val testSingle = Single.just(account)
+        Truth.assertThat(loginActivityPresenter.response == networkResponse)
 
     }
 }
